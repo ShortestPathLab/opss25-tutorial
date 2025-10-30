@@ -34,14 +34,14 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - name: Build pages
-        run: bunx @marp-team/marp-cli@latest slides.md -o dist/index.html
+        run: bunx @marp-team/marp-cli@latest slides.md -o index.html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: "dist"
+          path: "."
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
