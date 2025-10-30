@@ -37,7 +37,25 @@ In this tutorial, you'll learn to develop a multi-agent path planning algorithm.
 
 # Set up your environment
 
-Smth smthSmth smthSmth smthSmth smthSmth smthSmth smth :satisfied:
+Open up a terminal and run the following command:
+
+### MacOS
+
+```bash
+curl -fsSL https://pathfinding.ai/opss25-setup/install | bash
+```
+
+### Linux
+
+```bash
+wget -qO- https://pathfinding.ai/opss25-setup/install | bash
+```
+
+### Windows
+
+```ps
+powershell -c "irm https://pathfinding.ai/opss25-setup/install.ps1 | iex"
+```
 
 ---
 
