@@ -27,7 +27,7 @@ footer: "Optimisation and Planning Summer School 2025"
     }
 </style>
 
-![width:160px](./logo-wide.png)
+![width:160px](logo-wide.png)
 
 # **Introduction to Multi-agent Path Planning**
 
