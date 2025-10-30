@@ -5,7 +5,7 @@ paginate: true
 backgroundColor: #161616
 color: #f1f1f1
 theme: default
-transition: fade
+transition: fade 0.3s
 footer: "Optimisation and Planning Summer School 2025"
 ---
 
