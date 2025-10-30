@@ -30,13 +30,16 @@ jobs:
         run: |
           bunx @marp-team/marp-cli@latest slides.md -o dist/slides.pdf
           bunx @marp-team/marp-cli@latest slides.md -o dist/slides.pptx
+      - name: Set release tag
+        id: tag_sha
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Create release
         uses: actions/create-release@v1
         id: create_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}
+          tag_name: ${{ steps.tag_sha.outputs.sha_short }}
           release_name: Assets for ${{ github.ref }}
           body: |
             No release notes.
