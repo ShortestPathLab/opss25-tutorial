@@ -28,8 +28,8 @@ jobs:
           bun-version: latest
       - name: Build
         run: |
-          bunx @marp-team/marp-cli@latest slides.md -o dist/output.pdf
-          bunx @marp-team/marp-cli@latest slides.md -o dist/output.pptx
+          bunx @marp-team/marp-cli@latest slides.md -o dist/slides.pdf
+          bunx @marp-team/marp-cli@latest slides.md -o dist/slides.pptx
       - name: Create release
         uses: actions/create-release@v1
         id: create_release
