@@ -28,8 +28,8 @@ jobs:
           bun-version: latest
       - name: Build
         run: |
-          bunx @marp-team/marp-cli@latest slides.md -o dist/slides.pdf
-          bunx @marp-team/marp-cli@latest slides.md -o dist/slides.pptx
+          bunx @marp-team/marp-cli@latest slides.md -o slides.pdf
+          bunx @marp-team/marp-cli@latest slides.md -o slides.pptx
       - name: Set release tag
         id: tag_sha
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
@@ -51,7 +51,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/slides.pdf
+          asset_path: slides.pdf
           asset_name: slides.pdf
           asset_content_type: application/pdf
       - name: Upload release asset
@@ -60,6 +60,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/slides.pptx
+          asset_path: slides.pptx
           asset_name: slides.pptx
           asset_content_type: application/vnd.openxmlformats-officedocument.presentationml.presentation
