@@ -202,6 +202,8 @@ Then, visualise your solution:
 opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-32-20.map
 ```
 
+If on Apple Silicon, you may need to run ```source activate base``` from your bash shell.
+
 ---
 
 # How to Choose a Heuristic?
