@@ -223,7 +223,7 @@ In this exercise, your task is to implement an expander for the RobotRunners com
 2) Rotate 90 degrees either clockwise (CW) or counter-clockwise (CCW),
 <!-- 3) Wait at their current location. -->
 
-In `ex1_robotrunners_expander.py`, read through `expand()` and modify the helper functions `get_actions()` and `__move()` to generate nodes based on the above actions each robot can perform.
+In `ex1_lorr_expander.py`, read through `expand()` and modify the helper functions `get_actions()` and `move()` to generate nodes based on the above actions each robot can perform.
 
 _HINT: in get_actions(), you need to make sure that moves are valid within the environment._
 
