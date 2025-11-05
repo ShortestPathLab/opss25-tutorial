@@ -35,6 +35,12 @@ In this tutorial, you'll learn to develop a multi-agent path planning algorithm.
 
 ---
 
+# Introduction to Heuristic Search
+
+Presented by **Daniel Harabor**
+
+---
+
 # Set up your environment
 
 Open up a terminal and run the following command:
@@ -61,7 +67,7 @@ powershell -c "irm https://pathfinding.ai/opss25-setup/install.ps1 | iex"
 
 # Cloning OPSS25-StartKit
 
-Go to ```https://github.com/ShortestPathLab/opss25-startkit/```
+Go to `https://github.com/ShortestPathLab/opss25-startkit/`
 
 Navigate to a chosen directory in Terminal. Run the following command (using your preferred of https or SSH):
 
@@ -69,7 +75,7 @@ Navigate to a chosen directory in Terminal. Run the following command (using you
 git clone https://github.com/ShortestPathLab/opss25-startkit.git
 ```
 
-*Support*: for those unfamiliar with Git, we recommened visiting the *Github Docs* for cloning a repository.
+_Support_: for those unfamiliar with Git, we recommened visiting the _Github Docs_ for cloning a repository.
 
 Navigate to the newly created directory and explore by running:
 
@@ -80,11 +86,11 @@ ls
 
 We recommend opening the Start Kit in your favourite IDE.
 
-----
+---
 
 # Test your Setup
 
-Navigate to the OPSS25 top directory. Switch to a bash shell by running ```bash```. 
+Navigate to the OPSS25 top directory. Switch to a bash shell by running `bash`.
 To test the setup, run the following command:
 
 ```bash
@@ -95,7 +101,7 @@ If you see a search trace, you are good to go!
 
 Otherwise, please raise your hand and we will come over to help.
 
-----
+---
 
 # League of Robot Runners Competition
 
@@ -133,19 +139,19 @@ TODO
 # The Expander
 
 During search, an expander generates valid successors of the current state.
-This means that expanders are *domain-dependent*, and must be modified to match the `rules' of the world. 
+This means that expanders are _domain-dependent_, and must be modified to match the `rules' of the world.
 
 In this exercise, your task is to implement an expander for the RobotRunners competition. Robots are able to perform three actions:
-1) Move forward one step,
-2) Rotate 90 degrees either clockwise (CW) or counter-clockwise (CCW),
-3) Wait at their current location.
 
-In ```ex1_robotrunners_expander.py```, read through ```expand()``` and modify the helper functions ```get_actions()``` and ```__move()``` to generate nodes based on the above actions each robot can perform.
+1. Move forward one step,
+2. Rotate 90 degrees either clockwise (CW) or counter-clockwise (CCW),
+3. Wait at their current location.
 
-*HINT: in get_actions(), you need to make sure that moves are valid within the environment.*
+In `ex1_robotrunners_expander.py`, read through `expand()` and modify the helper functions `get_actions()` and `__move()` to generate nodes based on the above actions each robot can perform.
+
+_HINT: in get_actions(), you need to make sure that moves are valid within the environment._
 
 ---
-
 
 # RobotRunners Expander - SOLUTION
 
@@ -157,30 +163,31 @@ In ```ex1_robotrunners_expander.py```, read through ```expand()``` and modify th
 
 We now have a way to generate new states, but we also have to evaluate which looks the most promising!
 
-Nodes in A* are ranked by $f(n) = g(n) + h(n)$.
+Nodes in A\* are ranked by $f(n) = g(n) + h(n)$.
 
 Unlike what we have seen of heuristics in PDDL, in pathfinding we aim to implement domain-dependent hueristics. Let's have a quick look at implementing a couple.
 
 Your task is to implement the:
-1. ```manhattan_distance_heuristic()```,
-2. ```octile_distance_heuristic()```, and
-3. ```straight_line_distance()```
+
+1. `manhattan_distance_heuristic()`,
+2. `octile_distance_heuristic()`, and
+3. `straight_line_distance()`
 
 Manhattan distance returns the optimisitic grid-distance between any two locations (ignoring obstacles).
 The Octile distance returns a similar estimate, but it allows diagonal movements (cost = $\sqrt(2)$).
 The Straight line distance is just the direct Euclidean distance between two points (length of a straight line).
 
-----
+---
 
 # Heuristics - SOLUTION
 
-![w:500](manhattan.png) 
+![w:500](manhattan.png)
 
 ![w:900](octile.png)
 
 ![w:900](straight.png)
 
-----
+---
 
 # Creating the Search
 
@@ -202,37 +209,36 @@ Then, visualise your solution:
 opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-32-20.map
 ```
 
-If on Apple Silicon, you may need to run ```source activate base``` from your bash shell.
+If on Apple Silicon, you may need to run `source activate base` from your bash shell.
 
 ---
 
 # How to Choose a Heuristic?
 
-Not all heuristics are equal. What do we *want* from a heuristic?
+Not all heuristics are equal. What do we _want_ from a heuristic?
 
-<!-- Need to create an example image 
+<!-- Need to create an example image
 (I was also thinking of jmping to PostHoc instead with pre-generated search traces) -->
 
-----
+---
 
 # Improving our Heuristic
 
-Task: Modify the manhattan distance heuristic to be *direction-aware*.
+Task: Modify the manhattan distance heuristic to be _direction-aware_.
 
+We have provided a template for `get_init_turns` to help calculate the number of turns that may be required for an agent to face in one of the heuristic-recommended directions.
 
-We have provided a template for ```get_init_turns``` to help calculate the number of turns that may be required for an agent to face in one of the heuristic-recommended directions.
+_Hint: agents may require some number of turns to face the correct direction, and then may need to bend their path._
 
-*Hint: agents may require some number of turns to face the correct direction, and then may need to bend their path.*
-
-----
+---
 
 # Improving our Heuristic - SOLUTION
 
-Task: ```Modify the manhattan distance heuristic to be direction-aware.```
+Task: `Modify the manhattan distance heuristic to be direction-aware.`
 
 ![w:400](turns.png) ![w:700](direction_aware.png)
 
-----
+---
 
 # Congrats on completing the first exercise!
 
@@ -262,6 +268,7 @@ But agents are not alone. Agents must plan paths in a _shared_ environment.
 
 Let's see what happens when we plan paths for _two_ agents.
 Run and observe the output:
+
 ```bash
 opss25-lifelong --inputFile example_problems/random/random_2.json
 opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-32-20.map
@@ -296,32 +303,32 @@ opss25-lifelong --inputFile example_problems/random/random_2.json
 opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-32-20.map
 ```
 
-----
+---
 
 # Dealing with Agent Collisions - SOLUTION
 
 <!-- TODO: add solutions -->
 
-----
+---
 
 # Dealing With Agent Collisions - Part C
 
 While our agents now reserve their paths, this is done naively.
 Over time, we fill in an ever-greater area of unneccessary reservations (no agents actually occupy these locations!).
 
-In the simulator, agents plan paths at each timestep. 
-- 💡 As such, we can avoid collisions by only checking *next-step* reservations. 
+In the simulator, agents plan paths at each timestep.
 
-Task: modify the ```expand()``` function to check for collisions only for the first step in your path.
+- 💡 As such, we can avoid collisions by only checking _next-step_ reservations.
+
+Task: modify the `expand()` function to check for collisions only for the first step in your path.
 
 Test and visualise your implementation - do things seem to improve?
 
-
-----
+---
 
 # Congrats on completing the second exercise!
 
-You can now plan collision-free paths for multiple agents in a shared environment. 
+You can now plan collision-free paths for multiple agents in a shared environment.
 
 ### What's next?
 
