@@ -104,7 +104,7 @@ powershell -c "irm https://pathfinding.ai/opss25-setup/install.ps1 | iex"
 Navigate to a chosen directory in Terminal. Run the following command (using your preferred of https or SSH):
 
 ```bash
-git clone https://github.com/ShortestPathLab/opss25-startkit.git
+git clone -b a1 https://github.com/ShortestPathLab/opss25-startkit.git
 ```
 
 _Support_: for those unfamiliar with Git, we recommened visiting the _Github Docs_ for cloning a repository.
