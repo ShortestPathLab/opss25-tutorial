@@ -168,7 +168,7 @@ Your task is to implement the:
 
 Manhattan distance returns the optimisitic grid-distance between any two locations (ignoring obstacles).
 The Octile distance returns a similar estimate, but it allows diagonal movements (cost = $\sqrt(2)$).
-The Straight line distance is just the direct Euclidean distance bewtween two points (length of a straight line).
+The Straight line distance is just the direct Euclidean distance between two points (length of a straight line).
 
 ----
 
@@ -208,15 +208,21 @@ opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-3
 
 Not all heuristics are equal. What do we *want* from a heuristic?
 
+<!-- Need to create an example image 
+(I was also thinking of jmping to PostHoc instead with pre-generated search traces) -->
+
 ----
 
 # Improving our Heuristic
 
-Task: ```Modify the manhattan distance heuristic to be direction-aware.```
+Task: Modify the manhattan distance heuristic to be *direction-aware*.
+
+
+We have provided a template for ```get_init_turns``` to help calculate the number of turns that may be required for an agent to face in one of the heuristic-recommended directions.
 
 *Hint: agents may require some number of turns to face the correct direction, and then may need to bend their path.*
 
-We have provided a template for ```get_init_turns``` to help calculate the number of turns that may be required for an agent to face in one of the heuristic-recommended directions.
+----
 
 ## Improving our Heuristic - SOLUTION
 
@@ -224,6 +230,7 @@ Task: ```Modify the manhattan distance heuristic to be direction-aware.```
 
 ![w:400](turns.png) ![w:700](direction_aware.png)
 
+----
 
 # Congrats on completing the first exercise!
 
