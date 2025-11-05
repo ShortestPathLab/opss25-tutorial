@@ -224,7 +224,7 @@ We have provided a template for ```get_init_turns``` to help calculate the numbe
 
 ----
 
-## Improving our Heuristic - SOLUTION
+# Improving our Heuristic - SOLUTION
 
 Task: ```Modify the manhattan distance heuristic to be direction-aware.```
 
@@ -265,7 +265,7 @@ Run `MAPFplanner.py` and observe the output.
 
 ---
 
-## Dealing With Agent Collisions - Part A
+# Dealing With Agent Collisions - Part A
 
 Evidently, we have an issue now. Agents must learn to avoid each other!
 
@@ -278,7 +278,7 @@ In your code, you will see template functions for these two functions. It is you
 
 ---
 
-## Dealing With Agent Collisions - Part B
+# Dealing With Agent Collisions - Part B
 
 You will also need to complete this implementation---agents need to reserve their location in our high-level planner! To do so, you will need to:
 
