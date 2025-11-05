@@ -259,9 +259,11 @@ But agents are not alone. Agents must plan paths in a _shared_ environment.
 `Switch to the 'a2' branch` to continue. We have already filled out the expander from a1 for you.
 
 Let's see what happens when we plan paths for _two_ agents.
-Run `MAPFplanner.py` and observe the output.
-
-**What do you see?**
+Run and observe the output:
+```bash
+opss25-lifelong --inputFile example_problems/random/random_2.json
+opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-32-20.map
+```
 
 ---
 
@@ -285,5 +287,44 @@ You will also need to complete this implementation---agents need to reserve thei
 3. modify your `expander` so that it does not generate new states if there is a collision!
 4. modify the `high-level planner` to make agents reserve their path.
 
-To test your implementation, run `MAPFplanner.py`.
-**What looks different?**
+Test your implementation (**what looks different?**):
+
+```bash
+opss25-lifelong --inputFile example_problems/random/random_2.json
+opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-32-20.map
+```
+
+----
+
+# Dealing with Agent Collisions - SOLUTION
+
+<!-- TODO: add solutions -->
+
+----
+
+# Dealing With Agent Collisions - Part C
+
+While our agents now reserve their paths, this is done naively.
+Over time, we fill in an ever-greater area of unneccessary reservations (no agents actually occupy these locations!).
+
+In the simulator, agents plan paths at each timestep. 
+- 💡 As such, we can avoid collisions by only checking *next-step* reservations. 
+
+Task: modify the ```expand()``` function to check for collisions only for the first step in your path.
+
+Test and visualise your implementation - do things seem to improve?
+
+
+----
+
+# Congrats on completing the second exercise!
+
+You can now plan collision-free paths for multiple agents in a shared environment. 
+
+### What's next?
+
+- 💡 Think about the nature of time in MAPF problems
+
+- 💡 Experiment with visualising various scenarios.
+
+After the break, we will expand upon these ideas to bridge the gap to MAPF algorithms and lifelong planning.
