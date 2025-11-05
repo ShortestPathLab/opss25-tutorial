@@ -313,6 +313,8 @@ If on Apple Silicon, you may need to run `source activate base` from your bash s
 
 Not all heuristics are equal. What do we _want_ from a heuristic?
 
+![w:600](heuristic_example.png)
+
 <!-- Need to create an example image
 (I was also thinking of jmping to PostHoc instead with pre-generated search traces) -->
 
@@ -329,8 +331,6 @@ _Hint: agents may require some number of turns to face the correct direction, an
 ---
 
 # Improving our Heuristic - SOLUTION
-
-Task: `Modify the manhattan distance heuristic to be direction-aware.`
 
 ![w:400](turns.png) ![w:700](direction_aware.png)
 
