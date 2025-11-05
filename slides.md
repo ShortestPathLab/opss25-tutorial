@@ -67,6 +67,14 @@ We're going to build a system that can plan like this ->
 
 ---
 
+# There'll be a competition!
+
+Lets see if that gets you motivated. Details for how to join at the end of the session.
+
+![alt text](image-6.png)
+
+---
+
 # Set up your environment
 
 Open up a terminal and run the following command:
