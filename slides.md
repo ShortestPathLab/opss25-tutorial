@@ -108,7 +108,7 @@ cd opss25-startkit
 ls
 ```
 
-We recommend opening the Start Kit in your favourite IDE.
+We recommend opening the Start Kit in your favourite IDE. The codebase you'll be working on are in the `a1-a4` branches. We'll tell you when to switch branches.
 
 ---
 
@@ -203,6 +203,8 @@ This is a function that estimates the cost of reaching the goal from the current
 
 ---
 
+![bg right:20%](image-3.png)
+
 # The Expander
 
 During search, an expander generates valid successors of the current state.
@@ -241,7 +243,7 @@ Your task is to implement the:
 3. `straight_line_distance()`
 
 Manhattan distance returns the optimisitic grid-distance between any two locations (ignoring obstacles).
-The Octile distance returns a similar estimate, but it allows diagonal movements (cost = $\sqrt(2)$).
+The Octile distance returns a similar estimate, but it allows diagonal movements (cost = $\sqrt2$).
 The Straight line distance is just the direct Euclidean distance between two points (length of a straight line).
 
 ---
@@ -256,9 +258,19 @@ The Straight line distance is just the direct Euclidean distance between two poi
 
 ---
 
-# Creating the Search
+# Creating the search
 
-TODO
+Time to put your search together!
+
+In `a1/ex3_create_search.py`, you'll find the scaffolding for a search engine. Modify it to use the manhattan distance heuristic and the expander you implemented in the previous exercise:
+
+```py
+def create_search(domain: robotrunners):
+    open_list = bin_heap(search_node.compare_node_f)
+    expander = lorr_expander(domain)
+    heuristic = straight_heuristic
+    return graph_search(open_list, expander, heuristic_function=heuristic)
+```
 
 ---
 
@@ -321,9 +333,7 @@ You should now have a working A\* search.
 
 ---
 
-<!-- TODO replace picture -->
-
-![bg left:30%](./astar.png)
+![bg left:30%](image-4.png)
 
 # Arc 2: Dealing with Agent Collisions
 
@@ -331,7 +341,7 @@ We now have a working low-level search! Agents can get where they need to go.
 
 But agents are not alone. Agents must plan paths in a _shared_ environment.
 
-`Switch to the 'a2' branch` to continue. We have already filled out the expander from a1 for you.
+Switch to the `a2` branch to continue. We have already filled out the expander from a1 for you.
 
 Let's see what happens when we plan paths for _two_ agents.
 Run and observe the output:
