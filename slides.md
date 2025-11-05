@@ -13,7 +13,7 @@ footer: "Optimisation and Planning Summer School 2025"
     @import "base";
     @import url("https://fonts.googleapis.com/css2?family=Geist&display=swap");
     :root {
-        font-size: 22px;
+        font-size: 20px;
         font-family: "Geist", sans-serif;
         --color-fg-default: white;
         --color-canvas-default: white;
@@ -29,15 +29,41 @@ footer: "Optimisation and Planning Summer School 2025"
 
 ![width:160px](logo-wide.png)
 
-# **Introduction to Multi-agent Path Planning**
+# **Hands-on Introduction to Multi-agent Path Planning**
 
-In this tutorial, you'll learn to develop a multi-agent path planning algorithm.
+In this tutorial, you'll learn to develop a multi-agent path planning algorithm that can navigate through a shared environment in League of Robot Runners.
 
 ---
 
-# Introduction to Heuristic Search
+# Open these slides yourself
 
-Presented by **Daniel Harabor**
+Find these slides at:
+https://pathfinding.ai/opss25-tutorial/
+
+---
+
+# Arc 0: Setup
+
+Before we get going we'll need to:
+
+- Go through a bit of background
+- 📦 Use our script to set up your development environment
+- 📝 Clone our starting repository
+- 👀 Get familiar with the software we'll be using
+
+---
+
+# What we're working towards
+
+![alt text](lorr-screenshot.png)
+
+https://www.leagueofrobotrunners.org/
+
+---
+
+![bg right:70%](https://github.com/MAPF-Competition/PlanViz/raw/main/images/plan_viz.gif)
+
+We're going to build a system that can plan like this ->
 
 ---
 
@@ -65,9 +91,7 @@ powershell -c "irm https://pathfinding.ai/opss25-setup/install.ps1 | iex"
 
 ---
 
-# Cloning OPSS25-StartKit
-
-Go to `https://github.com/ShortestPathLab/opss25-startkit/`
+# Setting up the tutorial files
 
 Navigate to a chosen directory in Terminal. Run the following command (using your preferred of https or SSH):
 
@@ -88,26 +112,75 @@ We recommend opening the Start Kit in your favourite IDE.
 
 ---
 
-# Test your Setup
+# Test your setup
 
 Navigate to the OPSS25 top directory. Switch to a bash shell by running `bash`.
+
 To test the setup, run the following command:
 
 ```bash
 opss25-lifelong --inputFile example_problems/random/random_1.json
 ```
 
-If you see a search trace, you are good to go!
+If this executes successfully, you are good to go!
 
 Otherwise, please raise your hand and we will come over to help.
 
 ---
 
-# League of Robot Runners Competition
+# Software
 
-![alt text](lorr-screenshot.png)
+#### OPSS25 Startkit
 
-https://www.leagueofrobotrunners.org/
+This is a modified version of the Startkit that the League of Robot Runners participants used. It gives you the command `opss25-lifelong` to run the planner.
+
+#### Piglet
+
+This is the search library that we'll use to do path planning.
+
+#### Planviz
+
+Multi-agent visualiser for the League of Robot Runners.
+
+#### Posthoc
+
+Visualise search procedures in depth.
+
+---
+
+![bg left:20%](https://github.com/MAPF-Competition/PlanViz/raw/main/images/plan_viz.gif)
+
+# Planviz
+
+You can run the Planviz visualiser using the following command:
+
+```bash
+opss25-planviz --plan <json_file> --map <map_name>
+```
+
+You can find the map files in the `example_problems` directory.
+
+You can generate planviz files when you run the planner:
+
+```bash
+opss25-lifelong --inputFile example_problems/random/random_1.json --output output.json
+```
+
+---
+
+# Posthoc
+
+![bg left:40%](image-2.png)
+You can get the planner to generate a Posthoc file by setting `LOG_ENABLED=True` in `pyMAPFPlanner.py` to true.
+
+Then you may drag the created `.trace.yaml` file into Posthoc.
+
+Use this development version of Posthoc:
+https://spaaaacccee.github.io/posthoc-next/
+
+---
+
+# 🙋‍♂️ Questions so far?
 
 ---
 
@@ -127,12 +200,6 @@ This is a function that estimates the cost of reaching the goal from the current
 <br/>
 
 **Switch to the A1 branch to continue: `git checkout a1`**
-
----
-
-# A\* Visualised
-
-TODO
 
 ---
 
