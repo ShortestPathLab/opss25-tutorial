@@ -362,7 +362,24 @@ In this Exercise, we will work on implementing a way of tracking locations that 
 1. `reserve(state)` (reserves a specific location for an agent),
 2. `is_reserved(state)` (which checks if a location is reserved)
 
-In your code, you will see template functions for these two functions. It is your task to complete the implementation. You are safe to assume that the class has an inbuilt `vertex_table`, which is a 2D array indexed by [x][y].
+In your code, you will see template functions for these two functions. It is your task to complete the implementation. You are safe to assume that the class has an inbuilt `vertex_table`, which is a 2D array indexed by `[x][y]`.
+
+---
+
+# Reservation table - SOLUTIONS
+
+```py
+def reserve(self, *states: list[robotrunners_state]):
+    for state in states:
+        x, y, *_ = state
+        self.vertex_table[x][y] = True
+```
+
+```py
+def is_reserved(self, state: robotrunners_state):
+    x, y, *_ = state
+    return self.vertex_table[x][y]
+```
 
 ---
 
@@ -371,7 +388,7 @@ In your code, you will see template functions for these two functions. It is you
 You will also need to complete this implementation---agents need to reserve their location in our high-level planner! To do so, you will need to:
 
 3. modify your `expander` so that it does not generate new states if there is a collision!
-4. modify the `high-level planner` to make agents reserve their path.
+4. modify the `high-level planner` to make agents reserve their path. We can call the low level planner every single time step to make things easier.
 
 Test your implementation (**what looks different?**):
 
@@ -382,24 +399,76 @@ opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-3
 
 ---
 
-# Dealing with Agent Collisions - SOLUTION
+# Checking reservation table - SOLUTION
 
-<!-- TODO: add solutions -->
+```py
+def expand(self, current):
+        self.succ_.clear()
+        for a in self.get_actions(current.state_):
+            new_state = self.move(current.state_, a.move_)
+
+            if self.reservation_table_.is_reserved(new_state):
+                continue
+
+            self.succ_.append((new_state, a))
+        return self.succ_[:]
+
+```
+
+---
+
+# Reserve paths - SOLUTION
+
+```py
+def plan(
+        env: MAPF.SharedEnvironment,
+        paths: list[list],
+        last_did_error: bool = False,
+    ):
+        table.clear()
+        for i in range(len(paths)):
+            paths[i] = run_search(env, i)
+            # Check if we've got a solution
+            if paths[i]:
+                # Reserve all points on the path
+                table.reserve(interop.get_agent_state(env, i), *paths[i])
+        return paths
+```
 
 ---
 
 # Dealing With Agent Collisions - Part C
 
 While our agents now reserve their paths, this is done naively.
-Over time, we fill in an ever-greater area of unneccessary reservations (no agents actually occupy these locations!).
+You see a lot of agents fail to find a solution, and thus not move (no agents actually occupy these locations!).
 
-In the simulator, agents plan paths at each timestep.
+In the simulator, agents plan paths at each timestep anyways.
 
 - 💡 As such, we can avoid collisions by only checking _next-step_ reservations.
 
 Task: modify the `expand()` function to check for collisions only for the first step in your path.
 
 Test and visualise your implementation - do things seem to improve?
+
+---
+
+# Reserve paths, slightly better approach - SOLUTION
+
+```py
+def plan(
+        env: MAPF.SharedEnvironment,
+        paths: list[list],
+        last_did_error: bool = False,
+    ):
+        table.clear()
+        for i in range(len(paths)):
+            paths[i] = run_search(env, i)
+            # Check if we've got a solution
+            if paths[i]:
+                # Reserve only the first point on the path
+                table.reserve(interop.get_agent_state(env, i), paths[i][0])
+        return paths
+```
 
 ---
 
