@@ -124,23 +124,17 @@ This is a function that estimates the cost of reaching the goal from the current
 
 ---
 
-# A\* Visualised
-
-TODO
-
----
-
 # The Expander
 
 During search, an expander generates valid successors of the current state.
 This means that expanders are *domain-dependent*, and must be modified to match the `rules' of the world. 
 
-In this exercise, your task is to implement an expander for the RobotRunners competition. Robots are able to perform three actions:
+In this exercise, your task is to implement an expander for the RobotRunners competition. Robots are able to perform the following actions:
 1) Move forward one step,
 2) Rotate 90 degrees either clockwise (CW) or counter-clockwise (CCW),
-3) Wait at their current location.
+<!-- 3) Wait at their current location. -->
 
-In ```ex1_robotrunners_expander.py```, read through ```expand()``` and modify the helper functions ```get_actions()``` and ```__move()``` to generate nodes based on the above actions each robot can perform.
+In ```ex1_lorr_expander.py```, read through ```expand()``` and modify the helper functions ```get_actions()``` and ```move()``` to generate nodes based on the above actions each robot can perform.
 
 *HINT: in get_actions(), you need to make sure that moves are valid within the environment.*
 
@@ -149,7 +143,7 @@ In ```ex1_robotrunners_expander.py```, read through ```expand()``` and modify th
 
 # RobotRunners Expander - SOLUTION
 
-![w:500](get_actions.png) ![w:500](move.png)
+![w:460](get_actions.png) ![w:500](move.png)
 
 ---
 
@@ -301,6 +295,8 @@ opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-3
 # Dealing with Agent Collisions - SOLUTION
 
 <!-- TODO: add solutions -->
+
+![w:580](expand-w-reservation.png) ![w:510](reserve_path.png)
 
 ----
 
