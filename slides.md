@@ -248,7 +248,7 @@ You should now have a working A\* search.
 
 ---
 
-TODO replace picture
+<!-- TODO replace picture -->
 
 ![bg left:30%](./astar.png)
 
@@ -275,10 +275,10 @@ Evidently, we have an issue now. Agents must learn to avoid each other!
 
 In this Exercise, we will work on implementing a way of tracking locations that agents occupy in order to avoid collisions. We call this data strcture a _reservation table_, and it has two main methods:
 
-1. `add_reservation(state)` (reserves a specific location for an agent),
+1. `reserve(state)` (reserves a specific location for an agent),
 2. `is_reserved(state)` (which checks if a location is reserved)
 
-In your code, you will see template functions for these two functions. It is your task to complete the implementation. You are safe to assume that the class has an inbuilt `reservation_table`, which is a 2D array indexed by [x][y].
+In your code, you will see template functions for these two functions. It is your task to complete the implementation. You are safe to assume that the class has an inbuilt `vertex_table`, which is a 2D array indexed by [x][y].
 
 ---
 
@@ -325,8 +325,8 @@ You can now plan collision-free paths for multiple agents in a shared environmen
 
 ### What's next?
 
-- 💡 Think about the nature of time in MAPF problems
-
 - 💡 Experiment with visualising various scenarios.
+
+- 💡 Think about how we can improve our existing systems
 
 After the break, we will expand upon these ideas to bridge the gap to MAPF algorithms and lifelong planning.
