@@ -59,6 +59,44 @@ powershell -c "irm https://pathfinding.ai/opss25-setup/install.ps1 | iex"
 
 ---
 
+# Cloning OPSS25-StartKit
+
+Go to ```https://github.com/ShortestPathLab/opss25-startkit/```
+
+Navigate to a chosen directory in Terminal. Run the following command (using your preferred of https or SSH):
+
+```bash
+git clone https://github.com/ShortestPathLab/opss25-startkit.git
+```
+
+*Support*: for those unfamiliar with Git, we recommened visiting the *Github Docs* for cloning a repository.
+
+Navigate to the newly created directory and explore by running:
+
+```bash
+cd opss25-startkit
+ls
+```
+
+We recommend opening the Start Kit in your favourite IDE.
+
+----
+
+# Test your Setup
+
+Navigate to the OPSS25 top directory. Switch to a bash shell by running ```bash```. 
+To test the setup, run the following command:
+
+```bash
+opss25-lifelong --inputFile example_problems/random/random_1.json
+```
+
+If you see a search trace, you are good to go!
+
+Otherwise, please raise your hand and we will come over to help.
+
+----
+
 # League of Robot Runners Competition
 
 ![alt text](lorr-screenshot.png)
@@ -95,86 +133,54 @@ TODO
 # The Expander
 
 During search, an expander generates valid successors of the current state.
-This means that expanders are _domain-dependent_, and must be modified to match the `rules' of the world.
+This means that expanders are *domain-dependent*, and must be modified to match the `rules' of the world. 
 
-In this exercise, your task is to implement an expander for the RobotRunners competition. Robots are able to perform two actions:
+In this exercise, your task is to implement an expander for the RobotRunners competition. Robots are able to perform three actions:
+1) Move forward one step,
+2) Rotate 90 degrees either clockwise (CW) or counter-clockwise (CCW),
+3) Wait at their current location.
 
-1. Move forward one step,
-2. Rotate 90 degrees either clockwise (CW) or counter-clockwise (CCW)
+In ```ex1_robotrunners_expander.py```, read through ```expand()``` and modify the helper functions ```get_actions()``` and ```__move()``` to generate nodes based on the above actions each robot can perform.
 
-In `ex1_robotrunners_expander.py`, read through `expand()` and modify the helper functions `get_actions()` and `__move()` to generate nodes based on the above actions each robot can perform. We'll guide you through the changes you need to make.
-
-<!--
-_HINT: in get_actions(), you need to make sure that moves are valid within the environment._ -->
-
-<!-- How do expanders work? Let's write a grid-expander together.
-
-```py
-if (self.domain_.get_tile((x, y + 1))):
-        retval.append(grid_action())
-        retval[-1].move_ = Move_Actions.MOVE_RIGHT
-        retval[-1].cost_ = 1
-
-if (self.domain_.get_tile((x - 1, y))):
-    retval.append(grid_action())
-    retval[-1].move_ = Move_Actions.MOVE_UP
-    retval[-1].cost_ = 1
-``` -->
+*HINT: in get_actions(), you need to make sure that moves are valid within the environment.*
 
 ---
 
-# Implementing `get_actions()`
 
-```py
-# Check if we can move forward
-if any(
-    [
-        direction == Directions.NORTH and self.domain_.get_tile((x - 1, y)),
-        direction == Directions.EAST and self.domain_.get_tile((x, y + 1)),
-        direction == Directions.SOUTH and self.domain_.get_tile((x + 1, y)),
-        direction == Directions.WEST and self.domain_.get_tile((x, y - 1)),
-    ]
-):
-    actions.append(robotrunners_action())
-    actions[-1].move_ = Move_Actions.MOVE_FORWARD
-    actions[-1].cost_ = 1
+# RobotRunners Expander - SOLUTION
 
-# Can always rotate
-actions.append(robotrunners_action())
-actions[-1].move_ = Move_Actions.ROTATE_CW
-actions[-1].cost_ = 1
-actions.append(robotrunners_action())
-actions[-1].move_ = Move_Actions.ROTATE_CCW
-actions[-1].cost_ = 1
-```
+![w:500](get_actions.png) ![w:500](move.png)
 
 ---
 
-# Implementing `move()`
+# Domain-Dependent Heuristics
 
-```py
-if move == Move_Actions.ROTATE_CW:
-            direction = Directions((direction.value + 1) % 4)
-        elif move == Move_Actions.ROTATE_CCW:
-            direction = Directions((direction.value - 1) % 4)
-        elif move == Move_Actions.MOVE_FORWARD:
-            if direction == Directions.NORTH:
-                x -= 1
-            elif direction == Directions.EAST:
-                y += 1
-            elif direction == Directions.SOUTH:
-                x += 1
-            elif direction == Directions.WEST:
-                y -= 1
-```
+We now have a way to generate new states, but we also have to evaluate which looks the most promising!
 
----
+Nodes in A* are ranked by $f(n) = g(n) + h(n)$.
 
-# Creating Heuristics
+Unlike what we have seen of heuristics in PDDL, in pathfinding we aim to implement domain-dependent hueristics. Let's have a quick look at implementing a couple.
 
-TODO
+Your task is to implement the:
+1. ```manhattan_distance_heuristic()```,
+2. ```octile_distance_heuristic()```, and
+3. ```straight_line_distance()```
 
----
+Manhattan distance returns the optimisitic grid-distance between any two locations (ignoring obstacles).
+The Octile distance returns a similar estimate, but it allows diagonal movements (cost = $\sqrt(2)$).
+The Straight line distance is just the direct Euclidean distance bewtween two points (length of a straight line).
+
+----
+
+# Heuristics - SOLUTION
+
+![w:500](manhattan.png) 
+
+![w:900](octile.png)
+
+![w:900](straight.png)
+
+----
 
 # Creating the Search
 
@@ -198,6 +204,27 @@ opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-3
 
 ---
 
+# How to Choose a Heuristic?
+
+Not all heuristics are equal. What do we *want* from a heuristic?
+
+----
+
+# Improving our Heuristic
+
+Task: ```Modify the manhattan distance heuristic to be direction-aware.```
+
+*Hint: agents may require some number of turns to face the correct direction, and then may need to bend their path.*
+
+We have provided a template for ```get_init_turns``` to help calculate the number of turns that may be required for an agent to face in one of the heuristic-recommended directions.
+
+## Improving our Heuristic - SOLUTION
+
+Task: ```Modify the manhattan distance heuristic to be direction-aware.```
+
+![w:400](turns.png) ![w:700](direction_aware.png)
+
+
 # Congrats on completing the first exercise!
 
 You should now have a working A\* search.
@@ -209,26 +236,6 @@ You should now have a working A\* search.
 - 💡 Experiment with various heuristics.
 
 - 💡 Try creating a visualisation using Posthoc.
-
-<!-- Okay, so we now have a way to generate new states, but we also have to evaluate which looks the most promising!
-
-This brings us to the idea of domain-dependent hueristics. Let's have a quick look at implementing a couple.
-Write the function for the Manhattan distance heuristic together (one liner)
-
-Manhattan does reasonably well, but what are we actually looking for? What do we _want_ from a heuristic? (greatest value LESS than or equal to the true distance.)
-
-Say things to queue up the idea that we really want (perfect heuristic).
-When we have the time, we often want to precompute heuristics and re-use these for search! This can essentially eliminate the need for real-time search, but is still extremely useful for dynamic environments as a basline cost (lower bound).
-
-Let's have a look at how we do do this. Get the idea for Dijkstras from the crowd. Then work on showing the template for what we are having a look at. Here are the barebones, you need to run this yourself and collect a database of the results.
-
-Let's have a look at how much faster search is now.
-Run a series of problems.
-
-Should we create a script to report summary table in terminal for comparison purposes.
-
-Now, we have solved grid-based pathfinding problems. We can generate new states, and we can search over them efficiently.
-But oftentimes, problems introduce a new -->
 
 ---
 
