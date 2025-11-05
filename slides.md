@@ -123,6 +123,11 @@ We recommend opening the Start Kit in your favourite IDE. The codebase you'll be
 # Test your setup
 
 Navigate to the OPSS25 top directory. Switch to a bash shell by running `bash`.
+Activate your new OPSS25 environment by running:
+
+```bash
+conda activate opss25
+```
 
 To test the setup, run the following command:
 
@@ -132,7 +137,9 @@ opss25-lifelong --inputFile example_problems/random/random_1.json
 
 If this executes successfully, you are good to go!
 
-Otherwise, please raise your hand and we will come over to help.
+## Troubleshooting
+Please raise your hand and we will come over to help.
+- Problem: conda not recognised, Solution: `conda init bash`. If this doesn't work, then `source activate base`
 
 ---
 
@@ -271,13 +278,16 @@ Time to put your search together!
 
 In `a1/ex3_create_search.py`, you'll find the scaffolding for a search engine. Modify it to use the manhattan distance heuristic and the expander you implemented in the previous exercise:
 
+![w:300](lego_blocks.png) ![w:700](create_search.png)
+
+<!-- 
 ```py
 def create_search(domain: robotrunners):
     open_list = bin_heap(search_node.compare_node_f)
     expander = lorr_expander(domain)
     heuristic = straight_heuristic
     return graph_search(open_list, expander, heuristic_function=heuristic)
-```
+``` -->
 
 ---
 
@@ -373,6 +383,22 @@ In your code, you will see template functions for these two functions. It is you
 
 ---
 
+# Dealing With Agent Collisions - Part B
+
+You will also need to complete this implementation---agents need to reserve their location in our high-level planner! To do so, you will need to:
+
+3. modify your `expander` so that it does not generate new states if there is a collision!
+4. modify the `high-level planner` to make agents reserve their path. We can call the low level planner every single time step to make things easier.
+
+Test your implementation (**what looks different?**):
+
+```bash
+opss25-lifelong --inputFile example_problems/random/random_2.json
+opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-32-20.map
+```
+
+---
+
 # Reservation table - SOLUTIONS
 
 ```py
@@ -386,22 +412,6 @@ def reserve(self, *states: list[robotrunners_state]):
 def is_reserved(self, state: robotrunners_state):
     x, y, *_ = state
     return self.vertex_table[x][y]
-```
-
----
-
-# Dealing With Agent Collisions - Part B
-
-You will also need to complete this implementation---agents need to reserve their location in our high-level planner! To do so, you will need to:
-
-3. modify your `expander` so that it does not generate new states if there is a collision!
-4. modify the `high-level planner` to make agents reserve their path. We can call the low level planner every single time step to make things easier.
-
-Test your implementation (**what looks different?**):
-
-```bash
-opss25-lifelong --inputFile example_problems/random/random_2.json
-opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-32-20.map
 ```
 
 ---
