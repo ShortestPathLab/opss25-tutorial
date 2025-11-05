@@ -105,6 +105,7 @@ Navigate to a chosen directory in Terminal. Run the following command (using you
 
 ```bash
 git clone -b a1 https://github.com/ShortestPathLab/opss25-startkit.git
+git clone -b a1 git@github.com:ShortestPathLab/opss25-startkit.git
 ```
 
 _Support_: for those unfamiliar with Git, we recommened visiting the _Github Docs_ for cloning a repository.
