@@ -133,7 +133,7 @@ conda activate opss25
 To test the setup, run the following command:
 
 ```bash
-opss25-lifelong --inputFile example_problems/random/random_1.json
+opss25-lifelong --inputFile example_problems/random/random_1.json -s 100
 ```
 
 If this executes successfully, you are good to go!
@@ -179,7 +179,7 @@ You can find the map files in the `example_problems` directory.
 You can generate planviz files when you run the planner:
 
 ```bash
-opss25-lifelong --inputFile example_problems/random/random_1.json --output output.json
+opss25-lifelong --inputFile example_problems/random/random_1.json --output output.json -s 100
 ```
 
 ---
@@ -297,7 +297,7 @@ def create_search(domain: robotrunners):
 Run the start kit with one agent:
 
 ```bash
-opss25-lifelong --inputFile example_problems/random/random_1.json
+opss25-lifelong --inputFile example_problems/random/random_1.json -s 100
 ```
 
 Then, visualise your solution:
@@ -365,7 +365,7 @@ Let's see what happens when we plan paths for _two_ agents.
 Run and observe the output:
 
 ```bash
-opss25-lifelong --inputFile example_problems/random/random_2.json
+opss25-lifelong --inputFile example_problems/random/random_2.json -s 500
 opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-32-20.map
 ```
 
@@ -394,7 +394,7 @@ You will also need to complete this implementation---agents need to reserve thei
 Test your implementation (**what looks different?**):
 
 ```bash
-opss25-lifelong --inputFile example_problems/random/random_2.json
+opss25-lifelong --inputFile example_problems/random/random_2.json -s 100
 opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-32-20.map
 ```
 
