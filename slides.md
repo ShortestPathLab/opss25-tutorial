@@ -491,3 +491,81 @@ You can now plan collision-free paths for multiple agents in a shared environmen
 - 💡 Think about how we can improve our existing systems
 
 After the break, we will expand upon these ideas to bridge the gap to MAPF algorithms and lifelong planning.
+
+---
+
+# Participating in Robot Runners<sup>mini</sup>
+
+Go to the contest server https://opss25.contest.pathfinding.ai/
+
+![bg right:70% 100%](image-5.png)
+
+Click **Sign in with GitHub**.
+
+---
+
+# Participating in Robot Runners<sup>mini</sup>
+
+![bg right:70% 100%](image-7.png)
+
+Authorise the app to access your profile.
+
+---
+
+# Participating in Robot Runners<sup>mini</sup>
+
+![bg right:70% 100% ](image-9.png)
+
+We're going to create a submission repository.
+
+Click **Create repository**.
+
+---
+
+# Participating in Robot Runners<sup>mini</sup>
+
+![bg right:70% 100% ](image-10.png)
+
+Your repository should be created for you.
+
+Click open repository.
+
+---
+
+# Participating in Robot Runners<sup>mini</sup>
+
+![bg right:70% 100%](image-11.png)
+
+You'll may get asked to accept an invitation to the repository.
+
+Click **Accept invitation**.
+
+Now you're free to push your code to this repository 🎉
+
+---
+
+# Participating in Robot Runners<sup>mini</sup>
+
+![bg right:70% 100%](image-11.png)
+
+You'll may get asked to accept an invitation to the repository.
+
+Click **Accept invitation**.
+
+Now you're free to push your code to this repository 🎉
+
+---
+
+# Participating in Robot Runners<sup>mini</sup>
+
+![bg right:70% 100%](image-12.png)
+
+When you push to that repository, it'll be available to be selected. Click **Submit**, and verify that it's queued up below.
+
+---
+
+# Participating in Robot Runners<sup>mini</sup>
+
+![bg right:70% 100%](image-13.png)
+
+Click on a submission to check out its details.
