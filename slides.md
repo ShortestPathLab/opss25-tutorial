@@ -105,6 +105,7 @@ Navigate to a chosen directory in Terminal. Run the following command (using you
 
 ```bash
 git clone -b a1 https://github.com/ShortestPathLab/opss25-startkit.git
+git clone -b a1 git@github.com:ShortestPathLab/opss25-startkit.git
 ```
 
 _Support_: for those unfamiliar with Git, we recommened visiting the _Github Docs_ for cloning a repository.
@@ -123,16 +124,23 @@ We recommend opening the Start Kit in your favourite IDE. The codebase you'll be
 # Test your setup
 
 Navigate to the OPSS25 top directory. Switch to a bash shell by running `bash`.
+Activate your new OPSS25 environment by running:
+
+```bash
+conda activate opss25
+```
 
 To test the setup, run the following command:
 
 ```bash
-opss25-lifelong --inputFile example_problems/random/random_1.json
+opss25-lifelong --inputFile example_problems/random/random_1.json -s 100
 ```
 
 If this executes successfully, you are good to go!
 
-Otherwise, please raise your hand and we will come over to help.
+## Troubleshooting
+Please raise your hand and we will come over to help.
+- Problem: conda not recognised, Solution: `conda init bash`. If this doesn't work, then `source activate base`
 
 ---
 
@@ -171,7 +179,7 @@ You can find the map files in the `example_problems` directory.
 You can generate planviz files when you run the planner:
 
 ```bash
-opss25-lifelong --inputFile example_problems/random/random_1.json --output output.json
+opss25-lifelong --inputFile example_problems/random/random_1.json --output output.json -s 100
 ```
 
 ---
@@ -218,13 +226,12 @@ This is a function that estimates the cost of reaching the goal from the current
 During search, an expander generates valid successors of the current state.
 This means that expanders are _domain-dependent_, and must be modified to match the `rules' of the world.
 
-In this exercise, your task is to implement an expander for the RobotRunners competition. Robots are able to perform three actions:
+In this exercise, your task is to implement an expander for the RobotRunners competition. Robots are able to perform the following actions:
+1) Move forward one step,
+2) Rotate 90 degrees either clockwise (CW) or counter-clockwise (CCW),
+<!-- 3) Wait at their current location. -->
 
-1. Move forward one step,
-2. Rotate 90 degrees either clockwise (CW) or counter-clockwise (CCW),
-3. Wait at their current location.
-
-In `ex1_robotrunners_expander.py`, read through `expand()` and modify the helper functions `get_actions()` and `__move()` to generate nodes based on the above actions each robot can perform.
+In `ex1_lorr_expander.py`, read through `expand()` and modify the helper functions `get_actions()` and `move()` to generate nodes based on the above actions each robot can perform.
 
 _HINT: in get_actions(), you need to make sure that moves are valid within the environment._
 
@@ -232,7 +239,7 @@ _HINT: in get_actions(), you need to make sure that moves are valid within the e
 
 # RobotRunners Expander - SOLUTION
 
-![w:500](get_actions.png) ![w:500](move.png)
+![w:460](get_actions.png) ![w:500](move.png)
 
 ---
 
@@ -272,13 +279,16 @@ Time to put your search together!
 
 In `a1/ex3_create_search.py`, you'll find the scaffolding for a search engine. Modify it to use the manhattan distance heuristic and the expander you implemented in the previous exercise:
 
+![w:300](lego_blocks.png) ![w:700](create_search.png)
+
+<!-- 
 ```py
 def create_search(domain: robotrunners):
     open_list = bin_heap(search_node.compare_node_f)
     expander = lorr_expander(domain)
     heuristic = straight_heuristic
     return graph_search(open_list, expander, heuristic_function=heuristic)
-```
+``` -->
 
 ---
 
@@ -287,7 +297,7 @@ def create_search(domain: robotrunners):
 Run the start kit with one agent:
 
 ```bash
-opss25-lifelong --inputFile example_problems/random/random_1.json
+opss25-lifelong --inputFile example_problems/random/random_1.json -s 100
 ```
 
 Then, visualise your solution:
@@ -303,6 +313,8 @@ If on Apple Silicon, you may need to run `source activate base` from your bash s
 # How to Choose a Heuristic?
 
 Not all heuristics are equal. What do we _want_ from a heuristic?
+
+![w:600](heuristic_example.png)
 
 <!-- Need to create an example image
 (I was also thinking of jmping to PostHoc instead with pre-generated search traces) -->
@@ -320,8 +332,6 @@ _Hint: agents may require some number of turns to face the correct direction, an
 ---
 
 # Improving our Heuristic - SOLUTION
-
-Task: `Modify the manhattan distance heuristic to be direction-aware.`
 
 ![w:400](turns.png) ![w:700](direction_aware.png)
 
@@ -355,7 +365,7 @@ Let's see what happens when we plan paths for _two_ agents.
 Run and observe the output:
 
 ```bash
-opss25-lifelong --inputFile example_problems/random/random_2.json
+opss25-lifelong --inputFile example_problems/random/random_2.json -s 500
 opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-32-20.map
 ```
 
@@ -374,6 +384,22 @@ In your code, you will see template functions for these two functions. It is you
 
 ---
 
+# Dealing With Agent Collisions - Part B
+
+You will also need to complete this implementation---agents need to reserve their location in our high-level planner! To do so, you will need to:
+
+3. modify your `expander` so that it does not generate new states if there is a collision!
+4. modify the `high-level planner` to make agents reserve their path. We can call the low level planner every single time step to make things easier.
+
+Test your implementation (**what looks different?**):
+
+```bash
+opss25-lifelong --inputFile example_problems/random/random_2.json -s 100
+opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-32-20.map
+```
+
+---
+
 # Reservation table - SOLUTIONS
 
 ```py
@@ -387,22 +413,6 @@ def reserve(self, *states: list[robotrunners_state]):
 def is_reserved(self, state: robotrunners_state):
     x, y, *_ = state
     return self.vertex_table[x][y]
-```
-
----
-
-# Dealing With Agent Collisions - Part B
-
-You will also need to complete this implementation---agents need to reserve their location in our high-level planner! To do so, you will need to:
-
-3. modify your `expander` so that it does not generate new states if there is a collision!
-4. modify the `high-level planner` to make agents reserve their path. We can call the low level planner every single time step to make things easier.
-
-Test your implementation (**what looks different?**):
-
-```bash
-opss25-lifelong --inputFile example_problems/random/random_2.json
-opss25-planviz --plan=output.json --map=example_problems/random/maps/random-32-32-20.map
 ```
 
 ---
