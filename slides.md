@@ -168,6 +168,12 @@ Visualise search procedures in depth.
 
 # Planviz
 
+You must first generate planviz files by running the planner:
+
+```bash
+opss25-lifelong --inputFile example_problems/random/random_1.json --output output.json -s 100
+```
+
 You can run the Planviz visualiser using the following command:
 
 ```bash
@@ -175,12 +181,6 @@ opss25-planviz --plan <json_file> --map <map_name>
 ```
 
 You can find the map files in the `example_problems` directory.
-
-You can generate planviz files when you run the planner:
-
-```bash
-opss25-lifelong --inputFile example_problems/random/random_1.json --output output.json -s 100
-```
 
 ---
 
